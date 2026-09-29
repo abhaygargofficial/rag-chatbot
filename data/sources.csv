@@ -1,0 +1,17 @@
+id,type,url,scheme_name,status
+1,scheme_page,https://www.hdfcfund.com/explore/mutual-funds/hdfc-flexi-cap-fund/direct,HDFC Flexi Cap Fund,active
+2,scheme_page,https://www.hdfcfund.com/explore/mutual-funds/hdfc-small-cap-fund/direct,HDFC Small Cap Fund,active
+3,scheme_page,https://www.hdfcfund.com/explore/mutual-funds/hdfc-elss-tax-saver-fund/direct,HDFC ELSS Tax Saver Fund,active
+4,scheme_page,https://www.hdfcfund.com/product-solutions/overview/hdfc-elss-tax-saver/direct,HDFC ELSS Tax Saver Fund,active
+5,factsheet,https://www.hdfcfund.com/mutual-funds/factsheets,general,active
+6,kim,https://www.hdfcfund.com/investor-services/fund-documents/kim,general,active
+7,sid,https://www.hdfcfund.com/investor-services/fund-documents/sid,general,active
+8,ter_report,https://www.hdfcfund.com/statutory-disclosure/total-expense-ratio-of-mutual-fund-schemes/reports,general,active
+9,statement_guide,https://www.hdfcfund.com/services/additional-info/request-statement,general,active
+10,statement_guide,https://www.hdfcfund.com/services/consolidated-account-statement,general,active
+11,statement_guide,https://www.hdfcfund.com/learn/blog/how-get-capital-gain-statement-mutual-fund-schemes-india,general,active
+12,statement_guide,https://www.hdfcfund.com/information/online-services-investors,general,active
+13,riskometer,https://www.amfiindia.com/online-center/risk-o-meter,general,active
+14,education,https://www.amfiindia.com/investor,general,active
+15,education,https://www.sebi.gov.in/sebiweb/other/mutualfunds.jsp,general,active
+16,education,https://www.sebi.gov.in/sebi_data/commondocs/siep_h.html,general,active

@@ -1,0 +1,85 @@
+Mutual Fund FAQs (Facts-Only Q&A)
+Milestone brief
+Build a small FAQ assistant that answers facts about mutual fund schemes—e.g., expense ratio, exit load, minimum SIP, lock-in (ELSS), riskometer, benchmark, and how to download statements—using only official public pages. Every answer must include one source link. No advice.
+Who this helps
+Retail users comparing schemes; support/content teams answering repetitive MF questions.
+What you must build
+Scope your corpus: Pick one AMC and 3–5 schemes under it (e.g., one large-cap, one flexi-cap, one ELSS).
+Collect 15 public pages from AMC/SEBI/AMFI (factsheets, KIM/SID, scheme FAQs, fee/charges pages, riskometer/benchmark notes, statement/tax-doc guides).
+
+#
+Type
+URL
+1
+Scheme page: Flexi Cap Direct
+https://www.hdfcfund.com/explore/mutual-funds/hdfc-flexi-cap-fund/direct
+2
+Scheme page: Small Cap Direct
+https://www.hdfcfund.com/explore/mutual-funds/hdfc-small-cap-fund/direct
+3
+Scheme page: ELSS Tax Saver Direct
+https://www.hdfcfund.com/explore/mutual-funds/hdfc-elss-tax-saver-fund/direct
+4
+ELSS overview (lock-in, 80C)
+https://www.hdfcfund.com/product-solutions/overview/hdfc-elss-tax-saver/direct
+5
+Factsheets
+https://www.hdfcfund.com/mutual-funds/factsheets
+6
+KIM (all schemes)
+https://www.hdfcfund.com/investor-services/fund-documents/kim
+7
+SID (all schemes)
+https://www.hdfcfund.com/investor-services/fund-documents/sid
+8
+TER / expense ratio reports
+https://www.hdfcfund.com/statutory-disclosure/total-expense-ratio-of-mutual-fund-schemes/reports
+9
+Request account/capital gains statement
+https://www.hdfcfund.com/services/additional-info/request-statement
+10
+Consolidated Account Statement guide
+https://www.hdfcfund.com/services/consolidated-account-statement
+11
+Capital gain statement guide
+https://www.hdfcfund.com/learn/blog/how-get-capital-gain-statement-mutual-fund-schemes-india
+12
+Online services for investors (statements via WhatsApp/online)
+https://www.hdfcfund.com/information/online-services-investors
+13
+AMFI Riskometer
+https://www.amfiindia.com/online-center/risk-o-meter
+14
+AMFI Investor Corner
+https://www.amfiindia.com/investor
+15
+SEBI Mutual Funds page
+https://www.sebi.gov.in/sebiweb/other/mutualfunds.jsp
+16
+SEBI investor education: mutual funds
+https://www.sebi.gov.in/sebi_data/commondocs/siep_h.html
+
+
+FAQ assistant (working prototype):
+Answers factual queries only (e.g., “Expense ratio of ?”, “ELSS lock-in?”, “Minimum SIP?”, “Exit load?”, “Riskometer/benchmark?”, “How to download capital-gains statement?”).
+Shows one clear citation link in every answer.
+Refuses opinionated/portfolio questions (e.g., “Should I buy/sell?”) with a polite, facts-only message and a relevant educational link.
+Tiny UI: welcome line + 3 example questions and a note: “Facts-only. No investment advice.”
+Key constraints
+Public sources only. No screenshots of the app back-end; no third-party blogs as sources.
+No PII. Do not accept/store PAN, Aadhaar, account numbers, OTPs, emails, or phone numbers.
+No performance claims. Don’t compute/compare returns; link to the official factsheet if asked.
+Clarity & transparency. Keep answers ≤3 sentences; add “Last updated from sources: ”.
+What to submit (deliverables)
+Working prototype link (app/notebook) or a ≤3-min demo video if hosting isn’t possible.
+Source list (CSV/MD) of the 15–25 URLs you used.
+README with setup steps, scope (AMC + schemes), and known limits.
+Sample Q&A file (5–10 queries with the assistant’s answers + links).
+Disclaimer snippet used in your UI (facts-only, no advice).
+EACH STAGE IS DIFFERENT AND WHEN WE CREATE ARCHITECTURE WE WANT TO ALL STAGES OF RAG DATA INGESTION, + DATA RETRIEVAL
+
+VECTOR DB: CHROMA DB
+
+LOADING > CHUNKING> EMBEDING> STORE VECTOR DATA 
+EMBEDDING MODEL NAME: sentence-transformers/all-MiniLM-L6-v2")
+
