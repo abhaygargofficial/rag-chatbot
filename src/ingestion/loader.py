@@ -39,6 +39,8 @@ class URLLoader:
 
             if self._is_pdf(url):
                 text = self._load_pdf(url)
+            elif self._is_excel(url):
+                text = self._load_excel(url)
             else:
                 text = self._load_html(url)
 
@@ -66,6 +68,8 @@ class URLLoader:
             return "sid"
         elif "total-expense-ratio" in url_lower or "ter" in url_lower:
             return "ter_report"
+        elif url_lower.endswith((".xls", ".xlsx", ".xlsm")):
+            return "ter_report"
         elif "statement" in url_lower or "capital-gain" in url_lower:
             return "statement_guide"
         elif "risk-o-meter" in url_lower or "riskometer" in url_lower:
@@ -90,6 +94,10 @@ class URLLoader:
     def _is_pdf(self, url: str) -> bool:
         """Check if URL points to a PDF."""
         return url.lower().endswith(".pdf")
+
+    def _is_excel(self, url: str) -> bool:
+        """Check if URL points to an Excel file."""
+        return url.lower().endswith((".xls", ".xlsx", ".xlsm", ".csv"))
 
     def _load_html(self, url: str) -> str:
         """Fetch and parse HTML page."""
@@ -142,6 +150,32 @@ class URLLoader:
                             if row_text.strip():
                                 text_parts.append(row_text)
 
+            return "\n".join(text_parts)
+        finally:
+            os.unlink(tmp_path)
+
+    def _load_excel(self, url: str) -> str:
+        """Download and parse Excel file."""
+        import pandas as pd
+
+        response = self.session.get(url, timeout=60)
+        response.raise_for_status()
+
+        with tempfile.NamedTemporaryFile(suffix=".xls", delete=False) as tmp:
+            tmp.write(response.content)
+            tmp_path = tmp.name
+
+        try:
+            text_parts = []
+            df = pd.read_excel(tmp_path, sheet_name=None)
+            for sheet_name, sheet_df in df.items():
+                text_parts.append(f"Sheet: {sheet_name}")
+                for _, row in sheet_df.iterrows():
+                    row_text = " | ".join(
+                        str(cell) for cell in row if pd.notna(cell)
+                    )
+                    if row_text.strip():
+                        text_parts.append(row_text)
             return "\n".join(text_parts)
         finally:
             os.unlink(tmp_path)

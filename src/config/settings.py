@@ -11,13 +11,13 @@ CONFIG = {
     "collection_name": "mutual_fund_faq",
 
     # Retrieval
-    "top_k": 5,
-    "similarity_threshold": 0.45,
+    "top_k": 15,
+    "similarity_threshold": 0.30,
 
     # LLM (Groq)
     "llm_model": "openai/gpt-oss-120b",
     "temperature": 0.1,
-    "max_tokens": 150,
+    "max_tokens": 1024,
 
     # UI
     "app_title": "MF FAQ Assistant",

@@ -7,6 +7,7 @@ id,type,url,scheme_name,status
 6,kim,https://www.hdfcfund.com/investor-services/fund-documents/kim,general,active
 7,sid,https://www.hdfcfund.com/investor-services/fund-documents/sid,general,active
 8,ter_report,https://www.hdfcfund.com/statutory-disclosure/total-expense-ratio-of-mutual-fund-schemes/reports,general,active
+17,ter_report,https://files.hdfcfund.com/s3fs-public/ter/HDFCMF_SCHEMES_TER_24-09-2026.xls,general,active
 9,statement_guide,https://www.hdfcfund.com/services/additional-info/request-statement,general,active
 10,statement_guide,https://www.hdfcfund.com/services/consolidated-account-statement,general,active
 11,statement_guide,https://www.hdfcfund.com/learn/blog/how-get-capital-gain-statement-mutual-fund-schemes-india,general,active
