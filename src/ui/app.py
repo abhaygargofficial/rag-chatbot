@@ -81,10 +81,21 @@ st.markdown(
         background: var(--white) !important; color: var(--blue) !important;
         border: 1px solid var(--blue-line) !important; border-radius: 999px !important;
         font-weight: 600 !important; font-size: 13px !important; padding: 6px 16px !important;
-        min-height: 36px !important;
+        min-height: 36px !important; white-space: nowrap !important;
     }
     .st-key-kb_button button p { color: var(--blue) !important; font-size: 13px !important; font-weight: 600 !important; }
     .st-key-kb_button button:hover { background: var(--blue-tint) !important; border-color: var(--blue) !important; }
+
+    /* Keep top bar on one row on every screen size */
+    .st-key-topbar [data-testid="stHorizontalBlock"] {
+        flex-wrap: nowrap !important; gap: 12px !important; align-items: center !important;
+    }
+    .st-key-topbar [data-testid="stColumn"], .st-key-topbar [data-testid="column"] {
+        min-width: 0 !important; width: auto !important; flex: 1 1 auto !important;
+    }
+    .st-key-topbar [data-testid="stColumn"]:last-child, .st-key-topbar [data-testid="column"]:last-child {
+        flex: 0 0 auto !important;
+    }
 
     /* ---------- Hero ---------- */
     .hero {
@@ -257,23 +268,19 @@ st.markdown(
 )
 
 
-@st.cache_resource
+@st.cache_resource(show_spinner="Loading knowledge base...")
 def get_pipeline() -> RetrievalPipeline:
     pipeline = RetrievalPipeline(CONFIG)
 
-    # Check if the collection is empty (e.g., on deployed environment)
-    # and run ingestion if needed
+    # If the collection is empty (e.g. fresh deploy), build it from local snapshots.
+    # No st.* calls in here: cache_resource replays them on every rerun.
     try:
-        count = pipeline.searcher.collection.count()
-        if count == 0:
-            st.info("Knowledge base is empty. Running initial ingestion...")
+        if pipeline.searcher.collection.count() == 0:
             from src.ingestion.pipeline import IngestionPipeline
 
-            ingestion = IngestionPipeline(CONFIG)
-            ingestion.run_from_csv()
-            st.success("Ingestion complete!")
+            IngestionPipeline(CONFIG).run_from_csv()
     except Exception as e:
-        st.error(f"Error checking/initializing knowledge base: {e}")
+        print(f"Knowledge base init error: {e}", file=sys.stderr)
 
     return pipeline
 
