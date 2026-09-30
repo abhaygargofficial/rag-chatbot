@@ -12,10 +12,10 @@ CONFIG = {
 
     # Retrieval
     "top_k": 5,
-    "similarity_threshold": 0.5,
+    "similarity_threshold": 0.45,
 
     # LLM (Groq)
-    "llm_model": "llama-3.1-8b-instant",
+    "llm_model": "openai/gpt-oss-120b",
     "temperature": 0.1,
     "max_tokens": 150,
 

@@ -79,8 +79,17 @@ class Generator:
                 max_tokens=self.max_tokens,
             )
 
-            answer = response.choices[0].message.content.strip()
+            answer = response.choices[0].message.content
+            if answer:
+                answer = answer.strip()
             source_url = self.extract_source_url(prompt)
+
+            # Handle empty response
+            if not answer:
+                answer = (
+                    "Unable to generate an answer. Your API quota may be exhausted. "
+                    "Please check your Groq account or try again later."
+                )
 
             return {"answer": answer, "source_url": source_url}
 
@@ -91,6 +100,15 @@ class Generator:
                 "source_url": "",
             }
         except Exception as e:
+            error_str = str(e).lower()
+            if "quota" in error_str or "rate" in error_str or "limit" in error_str:
+                return {
+                    "answer": (
+                        "API quota exhausted or rate limit reached. "
+                        "Please check your Groq account or try again later."
+                    ),
+                    "source_url": "",
+                }
             logger.error(f"Unexpected error: {e}")
             return {
                 "answer": "Sorry, an unexpected error occurred. Please try again.",
