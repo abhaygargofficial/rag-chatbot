@@ -11,3 +11,5 @@ tiktoken>=0.5.0
 pytest>=7.4.0
 langchain-text-splitters
 groq
+openpyxl>=3.1.0
+xlrd>=2.0.1
