@@ -73,6 +73,7 @@ class Searcher:
 
                 # Filter by threshold
                 if score < threshold:
+                    logger.debug(f"  Chunk {chunk_id} filtered out (score={score:.4f} < {threshold})")
                     continue
 
                 output.append(
@@ -89,6 +90,12 @@ class Searcher:
 
         # Sort by score descending
         output.sort(key=lambda x: x["score"], reverse=True)
+
+        # Log retrieval results
+        logger.info(f"Search query: '{query}'")
+        logger.info(f"  Results returned: {len(output)} (requested: {n_results}, threshold: {threshold})")
+        for i, doc in enumerate(output[:5]):
+            logger.info(f"  [{i+1}] score={doc['score']:.4f} | {doc['text'][:100]}...")
 
         return output
 

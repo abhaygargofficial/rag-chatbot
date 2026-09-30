@@ -3,6 +3,7 @@
 import csv
 import logging
 import os
+import uuid
 from typing import Optional
 
 from src.config.settings import CONFIG
@@ -71,8 +72,19 @@ class IngestionPipeline:
                     )
                     continue
 
-                # Step 2: Chunk
-                chunks = self.chunker.split(raw_text, metadata)
+                # Step 2: Chunk (skip chunking for TER Excel - already chunked)
+                if "ter" in url.lower() and self.loader._is_excel(url):
+                    # TER Excel files are already parsed into natural-language chunks
+                    ter_chunks = self.loader._load_ter_excel(url)
+                    chunks = []
+                    for tc in ter_chunks:
+                        chunks.append({
+                            "chunk_id": str(uuid.uuid4()),
+                            "text": tc["text"],
+                            "metadata": {**tc["metadata"], "chunk_index": 0},
+                        })
+                else:
+                    chunks = self.chunker.split(raw_text, metadata)
 
                 # Step 3: Embed
                 chunks_with_embeddings = self.embedder.embed_chunks(chunks)

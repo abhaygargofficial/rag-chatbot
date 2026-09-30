@@ -259,7 +259,23 @@ st.markdown(
 
 @st.cache_resource
 def get_pipeline() -> RetrievalPipeline:
-    return RetrievalPipeline(CONFIG)
+    pipeline = RetrievalPipeline(CONFIG)
+
+    # Check if the collection is empty (e.g., on deployed environment)
+    # and run ingestion if needed
+    try:
+        count = pipeline.searcher.collection.count()
+        if count == 0:
+            st.info("Knowledge base is empty. Running initial ingestion...")
+            from src.ingestion.pipeline import IngestionPipeline
+
+            ingestion = IngestionPipeline(CONFIG)
+            ingestion.run_from_csv()
+            st.success("Ingestion complete!")
+    except Exception as e:
+        st.error(f"Error checking/initializing knowledge base: {e}")
+
+    return pipeline
 
 
 def _safe(text) -> str:
@@ -298,16 +314,7 @@ def render_bot(answer, source_url):
             "</div>"
         )
     st.markdown(
-        f"""
-        <div class="bot-row">
-            <div class="bot-avatar">{BARS_SVG}</div>
-            <div class="bot-card">
-                <div class="bot-name">Indmoney AI</div>
-                <div class="bot-answer">{_safe(answer)}</div>
-                {source_html}
-            </div>
-        </div>
-        """,
+        f'<div class="bot-row"><div class="bot-avatar">{BARS_SVG}</div><div class="bot-card"><div class="bot-name">Indmoney AI</div><div class="bot-answer">{_safe(answer)}</div>{source_html}</div></div>',
         unsafe_allow_html=True,
     )
 
